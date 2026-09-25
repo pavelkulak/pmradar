@@ -1,14 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { db } from "@/lib/db";
-import { jsonError } from "@/lib/api";
+import { isAllowedRequestOrigin, jsonError } from "@/lib/api";
 import { setSessionCookie } from "@/lib/session";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(request: NextRequest) {
-  const origin = request.headers.get("origin");
-  if (origin && origin !== request.nextUrl.origin) return jsonError("Недопустимый источник запроса", 403);
+  if (!isAllowedRequestOrigin(request)) return jsonError("Недопустимый источник запроса", 403);
   let body: unknown;
   try { body = await request.json(); } catch { return jsonError("Некорректный запрос", 400); }
   if (!body || typeof body !== "object") return jsonError("Некорректный запрос", 400);
