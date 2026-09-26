@@ -1,0 +1,488 @@
+.gachi-app {
+  --gachi-bg: #08070b;
+  --gachi-panel: #17151c;
+  --gachi-panel-2: #201d26;
+  --gachi-pink: #ee4db0;
+  --gachi-pink-hot: #ff76c8;
+  --gachi-violet: #a56be2;
+  --gachi-steel: #aeb2c3;
+  --gachi-success: #46dca4;
+  --gachi-line: #4d4553;
+  min-height: 100vh;
+  color: #f5f1f7;
+  background-color: #08070b;
+  background-image: linear-gradient(180deg, rgba(4,3,6,.08), rgba(4,3,6,.18) 48%, rgba(4,3,6,.38)), url('/gachi/backgrounds/locker-room.webp');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  overflow-x: clip;
+}
+
+.gachi-app .topbar {
+  height: 70px;
+  padding: 0 max(28px, calc((100vw - 1320px)/2));
+  gap: 42px;
+  background: linear-gradient(180deg, #25232b 0%, #0b0b0e 25%, #15151a 79%, #29242c 100%);
+  border-bottom: 1px solid #605263;
+  box-shadow: inset 0 1px rgba(255,255,255,.18), inset 0 -2px rgba(0,0,0,.8), 0 5px 18px rgba(0,0,0,.58), 0 1px 11px rgba(234,62,174,.22);
+  backdrop-filter: none;
+}
+.gachi-app .topbar::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(236,80,172,.65) 12%, #80828c 44%, rgba(236,80,172,.45) 86%, transparent);
+  pointer-events: none;
+}
+.gachi-app .brand {
+  font-size: 23px;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: -.8px;
+  text-shadow: 0 2px 2px #000, 0 0 13px rgba(255,113,210,.25);
+}
+.gachi-app .brand b {
+  color: #e9e7ef;
+  background: linear-gradient(180deg, #fff 5%, #9695a7 55%, #f2f0fa 85%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.gachi-app .brand-mark {
+  width: 40px;
+  height: 40px;
+  border-radius: 9px;
+  color: #f8e6f7;
+  background: linear-gradient(145deg, #9b7eaf, #332a3a 36%, #160e22 68%, #a75695);
+  border: 1px solid #b283bc;
+  box-shadow: inset 0 1px #ffccf2, inset 0 -3px #140b19, 0 0 0 3px #121016, 0 0 16px rgba(250,69,195,.62);
+  font-size: 24px;
+  font-style: italic;
+  text-shadow: 0 2px #100d14, 0 0 10px #fd83d1;
+}
+.gachi-app .main-nav { gap: 4px; }
+.gachi-app .nav-link {
+  padding: 0 22px;
+  color: #c4bdc9;
+  font-size: 14px;
+  font-weight: 700;
+  border-left: 1px solid rgba(255,255,255,.06);
+  border-right: 1px solid rgba(0,0,0,.5);
+}
+.gachi-app .nav-link:hover { color: #fff; background: rgba(242,73,178,.08); }
+.gachi-app .nav-link.active {
+  color: #fff;
+  background: radial-gradient(ellipse at 50% 100%, rgba(232,48,178,.25), rgba(215,51,154,.08) 63%, transparent);
+  text-shadow: 0 0 10px rgba(255,92,202,.95);
+}
+.gachi-app .nav-link.active::after {
+  height: 3px;
+  left: 10px;
+  right: 10px;
+  bottom: 3px;
+  background: #ff7bd0;
+  box-shadow: 0 0 8px 2px #ef36aa, 0 0 19px #ee4db0;
+}
+.gachi-app .logout-button { color: #d9d4dc; font-size: 13px; }
+.gachi-app .logout-button:hover { color: #fff; text-shadow: 0 0 10px var(--gachi-pink); }
+
+/* Audio controls: the same steel, leather and neon language as the dashboard. */
+.gachi-app .gachi-audio-control { position: relative; flex: none; }
+.gachi-app .gachi-audio-trigger { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 38px; padding: 0 13px; border: 1px solid #78617a; border-radius: 8px; color: #f4e8f3; background: linear-gradient(160deg,#312632,#15121b 60%,#25212b); box-shadow: inset 0 1px rgba(255,255,255,.15), 0 0 11px rgba(244,71,176,.18); font-size: 12px; font-weight: 800; white-space: nowrap; }
+.gachi-app .gachi-audio-trigger:hover,.gachi-app .gachi-audio-trigger[aria-expanded="true"] { border-color: #ff86cd; box-shadow: inset 0 1px rgba(255,255,255,.2),0 0 14px rgba(255,65,179,.43); }
+.gachi-app .gachi-audio-trigger > span:first-child { color: #ff8ad0; font-size: 18px; line-height: 1; text-shadow: 0 0 7px #e14ca7; }
+.gachi-app .gachi-audio-trigger.is-muted > span:first-child { color: #aaa3ad; text-shadow: none; }
+.gachi-app .gachi-audio-trigger.needs-gesture { border-color: #ff8bce; color: #fff; box-shadow: inset 0 1px rgba(255,255,255,.2),0 0 16px rgba(255,91,194,.45); }
+.gachi-app .gachi-audio-live { width: 6px; height: 6px; background: #57e7ab; border-radius: 50%; box-shadow: 0 0 7px #57e7ab; }
+.gachi-app .gachi-audio-popover { position: absolute; z-index: 20; right: 0; top: calc(100% + 12px); width: min(310px,calc(100vw - 24px)); padding: 20px; border: 1px solid #a36c9b; border-radius: 12px; color: #f4eff5; background: linear-gradient(145deg,rgba(37,30,42,.98),rgba(9,8,13,.99) 68%); box-shadow: inset 0 1px rgba(255,255,255,.18),0 18px 40px #000,0 0 22px rgba(235,65,165,.25); }
+.gachi-app .gachi-audio-popover::before { content: ""; position: absolute; top: -5px; right: 24px; width: 8px; height: 8px; transform: rotate(45deg); background: #2a202f; border-left: 1px solid #a36c9b; border-top: 1px solid #a36c9b; }
+.gachi-app .gachi-audio-kicker,.gachi-app .gachi-audio-step { margin: 0 0 7px; color: #ff89cb; font-size: 10px; font-weight: 900; letter-spacing: 2px; }
+.gachi-app .gachi-audio-popover > strong { font-size: 18px; color: #fff; text-shadow: 0 0 9px rgba(255,91,194,.35); }
+.gachi-app .gachi-audio-state { margin: 5px 0 20px; color: #bcb3c2; font-size: 12px; }
+.gachi-app .gachi-audio-volume-label { display: flex; justify-content: space-between; margin: 0 0 10px; color: #e9e0ec; font-size: 12px; font-weight: 700; }
+.gachi-app .gachi-audio-volume-label b { color: #ff8bce; }
+.gachi-app .gachi-audio-note { margin: 0 0 16px; color: #aaa1b1; font-size: 11px; line-height: 1.5; }
+.gachi-app .gachi-audio-advanced,.gachi-app .gachi-audio-retry,.gachi-app .gachi-audio-primary,.gachi-app .gachi-audio-secondary { border: 1px solid #f277bf; border-radius: 8px; background: linear-gradient(180deg,#ec60b3,#a92978); color: #fff; font-size: 12px; font-weight: 800; box-shadow: inset 0 1px rgba(255,255,255,.35),0 0 13px rgba(240,52,166,.28); }
+.gachi-app .gachi-audio-advanced { display: flex; width: 100%; justify-content: space-between; padding: 11px 13px; }
+.gachi-app .gachi-audio-retry { width: 100%; padding: 9px; margin: -8px 0 16px; }
+.gachi-app .gachi-audio-advanced:hover,.gachi-app .gachi-audio-retry:hover,.gachi-app .gachi-audio-primary:hover:not(:disabled) { filter: brightness(1.15); box-shadow: 0 0 18px rgba(244,76,178,.55); }
+.gachi-app .gachi-audio-backdrop { position: fixed; z-index: 40; inset: 0; display: grid; place-items: center; padding: 18px; background: rgba(3,2,5,.82); backdrop-filter: blur(7px); }
+.gachi-app .gachi-audio-modal { width: min(100%,640px); max-height: min(92vh,760px); overflow-y: auto; border: 1px solid #9c778f; border-radius: 14px; color: #f5eff5; background: linear-gradient(135deg,rgba(255,109,201,.08),transparent 38%),linear-gradient(160deg,#29232d,#0e0d13 65%); box-shadow: inset 0 1px rgba(255,255,255,.28),inset 0 0 0 5px #121018,0 25px 70px #000,0 0 34px rgba(248,63,178,.4); }
+.gachi-app .gachi-audio-modal-head { display: flex; align-items: center; justify-content: space-between; padding: 15px 24px; border-bottom: 1px solid #6e5b6e; background: linear-gradient(180deg,#27232d,#151219); color: #cfc3d0; font-size: 10px; font-weight: 900; letter-spacing: 2px; }
+.gachi-app .gachi-audio-modal-head button { display: grid; place-items: center; width: 30px; height: 30px; padding: 0; border: 1px solid #756777; border-radius: 5px; background: #19151c; color: #fff; font-size: 24px; line-height: 1; }
+.gachi-app .gachi-audio-modal-head button:hover { border-color: #ff89ce; color: #ff89ce; }
+.gachi-app .gachi-audio-stage { padding: 28px 34px 34px; min-height: 390px; }
+.gachi-app .gachi-audio-step { display: flex; justify-content: space-between; padding-bottom: 12px; border-bottom: 1px solid #5e4d5f; }
+.gachi-app .gachi-audio-step span { color: #978a9b; }
+.gachi-app .gachi-audio-stage h2 { margin: 18px 0 9px; color: #f3eff5; font: 900 clamp(23px,3vw,30px)/1.1 Manrope,sans-serif; letter-spacing: -.8px; text-shadow: 0 2px #000,0 0 14px rgba(255,102,193,.25); }
+.gachi-app .gachi-audio-description { max-width: 515px; color: #c9becd; font-size: 13px; line-height: 1.6; }
+.gachi-app .gachi-audio-description b { color: #ff96d4; }
+.gachi-app .gachi-audio-primary { min-height: 40px; padding: 0 18px; margin-top: 18px; }
+.gachi-app .gachi-audio-primary:disabled { cursor: not-allowed; opacity: .5; filter: grayscale(.7); box-shadow: none; }
+.gachi-app .gachi-audio-secondary { padding: 9px 13px; margin-top: 8px; background: #26202b; box-shadow: none; }
+.gachi-app .gachi-audio-hint { min-height: 18px; color: #cdb5c9; font-size: 12px; line-height: 1.5; }
+.gachi-app .gachi-audio-dial-row { display: flex; align-items: center; gap: 42px; margin: 22px 0 4px; }
+.gachi-app .gachi-audio-dial,.gachi-app .gachi-audio-rotation { position: relative; width: 160px; height: 160px; flex: none; border: 5px solid #2d2530; border-radius: 50%; background: radial-gradient(circle,#261e29 20%,#08070b 61%,#2c2630 75%); box-shadow: inset 0 0 0 1px #986c8d,inset 0 0 18px #000,0 0 0 1px #8e6886,0 0 20px rgba(238,71,169,.28); touch-action: none; cursor: grab; }
+.gachi-app .gachi-audio-dial:active,.gachi-app .gachi-audio-rotation:active { cursor: grabbing; }
+.gachi-app .gachi-audio-dial-pointer,.gachi-app .gachi-audio-rotation-marker { position: absolute; left: 50%; top: 12px; width: 4px; height: 68px; transform-origin: 50% 64px; pointer-events: none; }
+.gachi-app .gachi-audio-dial-pointer::before,.gachi-app .gachi-audio-rotation-marker::before { content: ""; display: block; width: 4px; height: 22px; border-radius: 3px; background: #ff78c7; box-shadow: 0 0 9px #ff46ae; }
+.gachi-app .gachi-audio-dial-core { position: absolute; inset: 50px; display: grid; place-items: center; border: 1px solid #7b667c; border-radius: 50%; background: linear-gradient(145deg,#39313d,#111016); color: #d1b6cf; font-weight: 900; font-style: italic; }
+.gachi-app .gachi-audio-big-value { color: #ff83c9; font: 900 39px/1 Manrope,sans-serif; text-shadow: 0 0 15px rgba(255,77,177,.55); }
+.gachi-app .gachi-audio-intent-arena { position: relative; height: 180px; margin: 25px 0 12px; border: 1px dashed #735b76; border-radius: 10px; background: repeating-linear-gradient(45deg,rgba(255,255,255,.015) 0 2px,transparent 2px 10px),rgba(6,5,9,.65); }
+.gachi-app .gachi-audio-intent { position: absolute; transform: translate(-50%,-50%); padding: 11px 13px; border: 1px solid #e474ba; border-radius: 7px; background: #44203b; color: #fff; font-size: 12px; font-weight: 800; white-space: nowrap; }
+.gachi-app .gachi-audio-intent:hover { box-shadow: 0 0 15px #e751a6; }
+.gachi-app .gachi-audio-code { display: grid; place-items: center; width: 180px; height: 72px; margin: 22px 0 20px; border: 1px solid #b86ca4; border-radius: 8px; background: #09070c; color: #ff8bd0; font: 900 38px/1 ui-monospace,monospace; letter-spacing: 9px; text-shadow: 0 0 12px #e33ca0; }
+.gachi-app .gachi-audio-input-label { display: block; margin: 0 0 7px; color: #d4c7d5; font-size: 11px; font-weight: 700; }
+.gachi-app #gachi-code { width: 190px; height: 41px; padding: 0 12px; border: 1px solid #776279; border-radius: 7px; background: #0c0a0e; color: #fff; font-size: 17px; letter-spacing: 4px; outline: none; }
+.gachi-app #gachi-code:focus { border-color: #ff8bd0; box-shadow: 0 0 0 3px rgba(240,82,170,.2); }
+.gachi-app .gachi-audio-direction { margin: 22px 0 10px; text-align: center; color: #ff90d2; font-size: 14px; font-weight: 900; letter-spacing: 1px; }
+.gachi-app .gachi-audio-rotation { display: grid; place-items: center; margin: 0 auto; width: 150px; height: 150px; }
+.gachi-app .gachi-audio-rotation b { color: #f4e6f3; font-size: 29px; text-shadow: 0 0 10px #ef5ab1; }
+.gachi-app .gachi-audio-rotation-buttons { display: flex; justify-content: center; gap: 10px; margin: 17px 0 12px; }
+.gachi-app .gachi-audio-rotation-buttons button { padding: 8px 13px; border: 1px solid #826987; border-radius: 7px; background: #27202d; color: #f5e7f3; font-size: 11px; font-weight: 800; }
+.gachi-app .gachi-audio-rotation-buttons button:hover { border-color: #ff86cc; }
+.gachi-app .gachi-audio-progress { height: 8px; border: 1px solid #67516b; border-radius: 20px; overflow: hidden; background: #09070d; }
+.gachi-app .gachi-audio-progress span { display: block; height: 100%; background: linear-gradient(90deg,#81395e,#ff69bd); box-shadow: 0 0 10px #e552a4; }
+.gachi-app .gachi-audio-hold { position: relative; display: grid; place-items: center; overflow: hidden; width: min(100%,340px); height: 60px; margin: 40px auto 18px; border: 1px solid #e37ab6; border-radius: 9px; background: #261c29; color: #fff; font-size: 14px; font-weight: 900; touch-action: none; }
+.gachi-app .gachi-audio-hold-fill { position: absolute; inset: 0 auto 0 0; background: linear-gradient(90deg,#a32c78,#f15db1); box-shadow: 0 0 16px #fa57b1; }
+.gachi-app .gachi-audio-hold > span:last-child { position: relative; }
+.gachi-app .gachi-audio-hold + .gachi-audio-hint { text-align: center; }
+
+.gachi-app .page-container { padding: 0 36px 76px; }
+.gachi-app .gachi-hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 246px;
+  margin: 0 -36px 0;
+  padding: 28px 36px 30px;
+  isolation: isolate;
+}
+.gachi-app .gachi-hero::before {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  inset: 0 calc((1320px - 100vw)/2);
+  background: radial-gradient(ellipse 38% 100% at 68% 54%, rgba(229,39,156,.35), transparent 90%), linear-gradient(90deg, rgba(5,4,8,.72) 0%, rgba(5,4,8,.37) 35%, rgba(5,4,8,.06) 70%, rgba(5,4,8,.25) 100%);
+  border-bottom: 1px solid rgba(237,91,180,.23);
+}
+.gachi-app .gachi-hero::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  bottom: 0;
+  left: -36px;
+  right: -36px;
+  height: 35px;
+  background: linear-gradient(0deg, rgba(5,4,8,.35), transparent);
+  pointer-events: none;
+}
+.gachi-app .gachi-hero-copy { position: relative; z-index: 2; max-width: 670px; }
+.gachi-app .eyebrow { color: #d5c4d9; letter-spacing: 2.6px; font-size: 11px; margin-bottom: 9px; }
+.gachi-app .gachi-hero h1 {
+  margin: 0 0 8px;
+  font-size: clamp(42px, 4.2vw, 64px);
+  line-height: 1.04;
+  font-weight: 900;
+  letter-spacing: -2.6px;
+  color: #eeeaf1;
+  background: linear-gradient(180deg, #fff 9%, #e5e5ed 31%, #8d90a0 58%, #f3eef5 79%, #77737f 100%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 3px 1px #08060a) drop-shadow(0 0 10px rgba(255,72,187,.22));
+}
+.gachi-app .gachi-hero .muted { color: #f1ebf3; font-size: 16px; margin: 0; text-shadow: 0 2px 3px #000; }
+.gachi-app .gachi-hero-aside { position: absolute; z-index: 2; right: 36px; bottom: 26px; }
+.gachi-app .unread-mascot {
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  right: -30px;
+  width: 400px;
+  pointer-events: none;
+  animation: gachi-mascot-peek .7s cubic-bezier(.18,.85,.2,1) both;
+}
+.gachi-app .unread-mascot img { display: block; width: 100%; height: auto; }
+@keyframes gachi-mascot-peek {
+  from { transform: translateX(115%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+.gachi-app .refresh-status {
+  border: 1px solid #91839a;
+  border-radius: 9px;
+  background: rgba(11,10,14,.88);
+  box-shadow: inset 0 1px rgba(255,255,255,.12), 0 4px 12px #000;
+  color: #f2edf5;
+  padding: 10px 13px;
+  font-size: 12px;
+}
+.gachi-app .refresh-status:hover { border-color: var(--gachi-pink); }
+.gachi-app .live-indicator { background: var(--gachi-success); box-shadow: 0 0 0 3px rgba(34,225,150,.13), 0 0 9px var(--gachi-success); }
+.gachi-app .settings-total {
+  padding: 8px 13px;
+  border: 1px solid #807486;
+  border-radius: 9px;
+  background: rgba(11,10,14,.9);
+  color: #c8becb;
+  box-shadow: 0 4px 12px #000;
+}
+.gachi-app .settings-total strong { color: #fa75c5; text-shadow: 0 0 12px rgba(243,70,173,.55); }
+
+.gachi-app .summary-grid { position: relative; z-index: 2; gap: 15px; margin: -7px 0 30px; }
+.gachi-app .summary-card,
+.gachi-app .panel,
+.gachi-app .chat-card,
+.gachi-app .empty-state {
+  background: linear-gradient(135deg, rgba(255,255,255,.045), transparent 35%), linear-gradient(115deg, #27232c, #17151b 51%, #201e25);
+  border: 1px solid #746979;
+  box-shadow: inset 0 1px rgba(255,255,255,.18), inset 0 -2px rgba(0,0,0,.76), 0 5px 16px rgba(0,0,0,.45);
+}
+.gachi-app .summary-card {
+  height: 154px;
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 68px minmax(0, 1fr);
+  grid-template-rows: 52px 1fr;
+  align-items: center;
+  column-gap: 14px;
+  padding: 20px 25px;
+  border-radius: 12px;
+  transition: border-color .2s, box-shadow .2s, transform .2s;
+}
+.gachi-app .summary-card::before,
+.gachi-app .panel::before,
+.gachi-app .empty-state::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url('/gachi/textures/metal.webp') center / 480px repeat;
+  opacity: .075;
+  pointer-events: none;
+}
+.gachi-app .summary-card::after,
+.gachi-app .empty-calm::after {
+  content: "";
+  position: absolute;
+  inset: 9px;
+  border: 1px solid rgba(224,207,230,.1);
+  border-radius: 7px;
+  background: radial-gradient(circle at 8px 8px,#aaa1b0 0 2px,#231d29 3px,transparent 4px), radial-gradient(circle at calc(100% - 8px) 8px,#aaa1b0 0 2px,#231d29 3px,transparent 4px), radial-gradient(circle at 8px calc(100% - 8px),#aaa1b0 0 2px,#231d29 3px,transparent 4px), radial-gradient(circle at calc(100% - 8px) calc(100% - 8px),#aaa1b0 0 2px,#231d29 3px,transparent 4px);
+  pointer-events: none;
+}
+.gachi-app .summary-card:hover { border-color: #bd6da4; box-shadow: inset 0 1px #887686, 0 0 17px rgba(236,55,169,.21), 0 8px 22px #000; transform: translateY(-2px); }
+.gachi-app .summary-photo { position: absolute; z-index: 0; right: 6px; bottom: -4px; width: 145px; height: 152px; pointer-events: none; -webkit-mask-image: linear-gradient(90deg,transparent,#000 27%); mask-image: linear-gradient(90deg,transparent,#000 27%); }
+.gachi-app .summary-photo-attention { background: url('/gachi/characters/bodybuilder-front.png') center 0 / 125px auto no-repeat; opacity: .25; filter: grayscale(1); }
+.gachi-app .summary-photo-back { background: url('/gachi/characters/bodybuilder-back.webp') center 0 / 155px auto no-repeat; opacity: .27; }
+.gachi-app .attention-summary { border-color: #d066a6; box-shadow: inset 0 1px rgba(255,255,255,.22), inset 0 -2px #100914, 0 0 16px rgba(228,55,158,.24), 0 5px 16px #000; }
+.gachi-app .summary-icon {
+  grid-row: 1 / 3;
+  width: 60px;
+  height: 60px;
+  display: grid;
+  place-items: center;
+  position: relative;
+  z-index: 1;
+  color: #d4dcff;
+  border: 1px solid #8d8a9b;
+  border-radius: 10px;
+  background: radial-gradient(circle at 45% 35%, #454a65, #0b0c13 70%);
+  box-shadow: inset 0 1px rgba(255,255,255,.24), 0 0 0 3px #121117, 0 0 14px rgba(175,168,221,.26);
+}
+.gachi-app .summary-icon svg { width: 31px; height: 31px; }
+.gachi-app .summary-icon-eye { color: #ff8ac7; border-color: #e975b9; background: radial-gradient(circle at 45% 35%, #752046, #1b0b19 75%); box-shadow: inset 0 1px #ffb5de, 0 0 0 3px #170e19, 0 0 15px rgba(236,55,169,.58); }
+.gachi-app .summary-label { align-self: end; position: relative; z-index: 1; color: #f4edf6; font-size: 13px; font-weight: 700; line-height: 1.35; }
+.gachi-app .summary-card strong { align-self: start; position: relative; z-index: 1; margin-top: 7px; color: #d6d8f2; font-size: 42px; text-shadow: 0 2px 2px #000, 0 0 13px rgba(169,160,245,.42); }
+.gachi-app .attention-summary strong { color: #ff76a7; text-shadow: 0 2px 2px #000, 0 0 14px rgba(255,70,151,.68); }
+
+.gachi-app .chat-section { margin-top: 26px; }
+.gachi-app .section-heading { margin-bottom: 14px; }
+.gachi-app .section-heading h2,
+.gachi-app .heading-text b { color: #f5f0f6; font-size: 18px; text-shadow: 0 1px #000; }
+.gachi-app .section-heading p { color: #ada5b2; font-size: 12px; margin-left: 22px; }
+.gachi-app .section-title { gap: 12px; }
+.gachi-app .section-marker { width: 9px; height: 9px; }
+.gachi-app .marker-attention { background: #ff6da0; box-shadow: 0 0 0 5px rgba(237,82,153,.14), 0 0 9px #ff66ad; }
+.gachi-app .marker-read { background: #aab0c0; box-shadow: 0 0 0 5px rgba(159,164,185,.12); }
+.gachi-app .count-pill { background: linear-gradient(#48424d,#25232b); border: 1px solid #6d6572; color: #f5eef7; font-size: 12px; box-shadow: inset 0 1px rgba(255,255,255,.16); }
+.gachi-app .count-alert { color: #ffd3e6; border-color: #9b4e6d; background: linear-gradient(#683247,#361d2a); }
+.gachi-app .chat-list { gap: 11px; }
+.gachi-app .chat-card {
+  position: relative;
+  border-radius: 11px;
+  min-height: 112px;
+  padding: 21px 26px;
+}
+.gachi-app .chat-card:hover { border-color: #ab789d; box-shadow: inset 0 1px rgba(255,255,255,.18), 0 5px 22px rgba(218,67,157,.14); }
+.gachi-app .chat-card-unread { border-left: 3px solid #f476b7; background: linear-gradient(100deg, #31202c, #19161d 45%, #222027); }
+.gachi-app .chat-title-line h3 { color: #fff; font-size: 16px; }
+.gachi-app .platform-badge { color: #dbd4df; background: #27252e; border-color: #686172; border-radius: 6px; }
+.gachi-app .platform-badge i { background: #84b9ff; }
+.gachi-app .unread-count { color: #ff91be; }
+.gachi-app .unread-dot { background: #ff69a7; box-shadow: 0 0 0 4px rgba(255,105,167,.15), 0 0 8px #f66caa; }
+.gachi-app .read-label { color: #69d9b3; }
+.gachi-app .message-time,
+.gachi-app .ack-time { color: #aaa4b0; }
+.gachi-app .message-time time,
+.gachi-app .ack-time time { color: #d8d2dc; }
+.gachi-app .button { border-radius: 7px; font-size: 12px; }
+.gachi-app .button-primary { color: #170b14; background: linear-gradient(180deg,#ffb0db,#ec69b2 52%,#c7438f); border-color: #ffa8d2; box-shadow: inset 0 1px #ffe1f1, 0 0 15px rgba(243,77,169,.32); }
+.gachi-app .button-primary:hover:not(:disabled) { background: #ff9bd2; box-shadow: 0 0 19px rgba(243,77,169,.6); }
+.gachi-app .button-secondary { color: #f0e7f1; background: linear-gradient(#3a3540,#25222a); border-color: #857989; box-shadow: inset 0 1px rgba(255,255,255,.15); }
+.gachi-app .button-secondary:hover:not(:disabled) { color: #fff; background: #42303d; border-color: #e36ba9; box-shadow: 0 0 11px rgba(243,77,169,.25); }
+.gachi-app .button:focus-visible,
+.gachi-app a:focus-visible,
+.gachi-app button:focus-visible,
+.gachi-app input:focus-visible { outline: 2px solid #ff9dd3; outline-offset: 3px; }
+
+.gachi-app .empty-state {
+  position: relative;
+  overflow: hidden;
+  border-style: solid;
+  border-radius: 12px;
+  min-height: 158px;
+  padding: 30px 36px;
+}
+.gachi-app .empty-calm { padding-right: 34%; }
+.gachi-app .empty-calm > :not(.empty-figure) { position: relative; z-index: 2; }
+.gachi-app .empty-icon { width: 54px; height: 54px; border-radius: 50%; color: #a9e5ff; background: radial-gradient(circle,#2d3b48,#171d27); box-shadow: 0 0 13px rgba(127,198,230,.25); font-size: 26px; }
+.gachi-app .empty-state h3 { color: #fff; font-size: 17px; margin-bottom: 7px; }
+.gachi-app .empty-state p { color: #c7becb; font-size: 13px; line-height: 1.5; }
+.gachi-app .empty-figure {
+  position: absolute;
+  right: 3%;
+  bottom: 0;
+  width: 450px;
+  height: 100%;
+  background: url('/gachi/characters/reclining-athlete.webp') center -48px / 450px auto no-repeat;
+  opacity: .78;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to right,transparent,#000 25%);
+  mask-image: linear-gradient(to right,transparent,#000 25%);
+}
+.gachi-app .skeleton-line,
+.gachi-app .skeleton-button { background: #48414e; }
+.gachi-app .read-section { position: relative; border-top: 1px solid #625569; margin-top: 34px; padding-top: 22px; }
+.gachi-app .read-section::before { content: ""; position: absolute; width: 28%; height: 1px; top: -1px; left: 20%; background: linear-gradient(90deg, transparent, #db65aa, transparent); box-shadow: 0 0 8px #ca408f; pointer-events: none; }
+.gachi-app .read-section::after { content: ""; position: absolute; top: -30px; left: 0; right: 0; height: 20px; background: url('/gachi/decor/chain-horizontal.png') center center / 450px auto repeat-x; opacity: .7; pointer-events: none; }
+.gachi-app .collapse-heading { color: #eee9f1; }
+.gachi-app .collapse-heading:hover .heading-text b { color: #ffb2d9; }
+.gachi-app .heading-text small,
+.gachi-app .read-empty { color: #aaa2ad; }
+.gachi-app .chevron { color: #d9a5c5; }
+.gachi-app .notice { font-size: 13px; }
+.gachi-app .notice-error { color: #ffd3dd; border-color: #a84962; background: #32141e; }
+.gachi-app .notice-error button { color: #ffb1cf; }
+.gachi-app .notice-success { color: #baf7df; border-color: #367e65; background: #122c23; }
+
+.gachi-app .settings-page .gachi-hero { margin-bottom: 25px; }
+.gachi-app .settings-list { display: grid; gap: 16px; }
+.gachi-app .settings-chat { position: relative; overflow: hidden; border-radius: 12px; padding: 24px 28px; }
+.gachi-app .settings-chat.row-disabled { opacity: .65; }
+.gachi-app .settings-chat-top,
+.gachi-app .settings-chat-bottom { position: relative; display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; }
+.gachi-app .settings-chat-top { padding-bottom: 21px; border-bottom: 1px solid #55505d; }
+.gachi-app .field-caption { display: block; margin-bottom: 7px; color: #ada3b3; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.3px; }
+.gachi-app .table-chat-name { margin: 0; color: #fff; font-size: 19px; line-height: 1.3; overflow-wrap: anywhere; }
+.gachi-app .settings-platform { text-align: right; }
+.gachi-app .settings-platform .platform-badge { margin-left: auto; }
+.gachi-app .settings-platform code { display: block; color: #a9a1af; font-size: 11px; margin-top: 7px; overflow-wrap: anywhere; }
+.gachi-app .settings-fields { position: relative; display: grid; grid-template-columns: 1fr 1.4fr minmax(125px,.5fr); gap: 20px; padding: 22px 0; }
+.gachi-app .settings-field { min-width: 0; }
+.gachi-app .table-input { width: 100%; max-width: 100%; height: 42px; padding: 0 12px; background: #0d0c11; border: 1px solid #696170; border-radius: 7px; color: #f5eff7; font-size: 13px; }
+.gachi-app .table-input::placeholder { color: #827a89; }
+.gachi-app .table-input:focus { border-color: #f277bc; box-shadow: 0 0 0 3px rgba(242,119,188,.19); }
+.gachi-app .switch-label { display: inline-flex; min-height: 42px; gap: 10px; color: #eee7f0; font-size: 12px; }
+.gachi-app .switch-control { width: 38px; height: 22px; background: #77717c; }
+.gachi-app .switch-control::after { width: 16px; height: 16px; }
+.gachi-app .switch-label input:checked + .switch-control { background: #ce4e9d; box-shadow: 0 0 11px rgba(238,77,176,.42); }
+.gachi-app .switch-label input:checked + .switch-control::after { transform: translateX(16px); }
+.gachi-app .settings-chat-bottom { align-items: flex-end; border-top: 1px solid #55505d; padding-top: 18px; }
+.gachi-app .settings-dates { display: flex; flex-wrap: wrap; gap: 20px 44px; }
+.gachi-app .table-date { display: block; color: #e4dce6; font-size: 12px; }
+.gachi-app .settings-chat .button { min-width: 108px; height: 38px; }
+.gachi-app .table-note { padding: 4px 0 0; border: 0; margin: 0; color: #aaa1ae; font-size: 11px; }
+.gachi-app .loading-panel { padding: 52px; color: #d4cbd7; font-size: 14px; }
+.gachi-app .empty-settings { position: relative; padding: 70px 20px; }
+.gachi-app .empty-settings h2 { color: #fff; font-size: 20px; }
+.gachi-app .empty-settings p { color: #c3bac7; font-size: 13px; }
+
+@media (max-width: 1350px) {
+  .gachi-app .gachi-hero::before { inset: 0 -36px; }
+}
+@media (max-width: 900px) {
+  .gachi-app .topbar { height: 64px; gap: 26px; padding: 0 22px; }
+  .gachi-app .page-container { padding: 0 22px 60px; }
+  .gachi-app .gachi-hero { margin: 0 -22px; padding: 28px 22px; height: 218px; }
+  .gachi-app .gachi-hero::before { inset: 0; }
+  .gachi-app .gachi-hero::after { left: 0; right: 0; }
+  .gachi-app .gachi-hero-aside { right: 22px; bottom: 20px; }
+  .gachi-app .unread-mascot { width: 280px; right: -10px; top: 18px; }
+  .gachi-app .summary-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .gachi-app .summary-card:last-child { display: grid; grid-column: 1 / -1; }
+  .gachi-app .settings-fields { grid-template-columns: 1fr 1fr; }
+  .gachi-app .settings-field:last-child { grid-column: 1 / -1; }
+}
+@media (max-width: 600px) {
+  .gachi-app { background-attachment: scroll; background-size: auto 100%; background-position: center top; }
+  .gachi-app .topbar { padding: 0 13px; gap: 10px; height: 60px; }
+  .gachi-app .brand { font-size: 15px; gap: 7px; }
+  .gachi-app .brand-mark { width: 30px; height: 30px; font-size: 19px; }
+  .gachi-app .main-nav { gap: 0; }
+  .gachi-app .nav-link { padding: 0 9px; font-size: 11px; }
+  .gachi-app .logout-button { font-size: 0; min-width: 28px; }
+  .gachi-app .logout-button span { font-size: 17px; margin: 0; }
+  .gachi-app .gachi-audio-trigger { width: 31px; height: 32px; min-height: 32px; padding: 0; }
+  .gachi-app .gachi-audio-trigger-text { display: none; }
+  .gachi-app .gachi-audio-live { position: absolute; right: -2px; top: 2px; }
+  .gachi-app .gachi-audio-popover { position: fixed; top: 66px; right: 10px; width: min(310px,calc(100vw - 20px)); }
+  .gachi-app .gachi-audio-modal-head { padding: 12px 17px; }
+  .gachi-app .gachi-audio-stage { padding: 20px 20px 25px; min-height: 360px; }
+  .gachi-app .gachi-audio-dial-row { gap: 22px; }
+  .gachi-app .gachi-audio-dial { width: 130px; height: 130px; }
+  .gachi-app .gachi-audio-dial-pointer { top: 7px; height: 58px; transform-origin: 50% 52px; }
+  .gachi-app .gachi-audio-dial-core { inset: 40px; }
+  .gachi-app .gachi-audio-big-value { font-size: 30px; }
+  .gachi-app .gachi-audio-intent { font-size: 10px; }
+  .gachi-app .page-container { padding: 0 14px 48px; }
+  .gachi-app .gachi-hero { margin: 0 -14px; height: 205px; padding: 24px 14px 51px; align-items: flex-start; }
+  .gachi-app .gachi-hero::before { background: linear-gradient(90deg, rgba(5,4,8,.82), rgba(5,4,8,.28)); }
+  .gachi-app .gachi-hero h1 { font-size: 40px; letter-spacing: -1.7px; }
+  .gachi-app .gachi-hero .muted { font-size: 13px; }
+  .gachi-app .gachi-hero-aside { left: 14px; right: auto; bottom: 17px; }
+  .gachi-app .unread-mascot { width: 210px; right: 0; top: 60px; }
+  .gachi-app .refresh-status { font-size: 10px; padding: 7px 9px; }
+  .gachi-app .summary-grid { grid-template-columns: 1fr; gap: 12px; margin-top: -3px; }
+  .gachi-app .summary-card:last-child { grid-column: auto; }
+  .gachi-app .summary-card { height: 112px; grid-template-columns: 52px 1fr; grid-template-rows: 37px 1fr; padding: 17px 19px; gap: 0 15px; }
+  .gachi-app .summary-icon { width: 46px; height: 46px; }
+  .gachi-app .summary-icon svg { width: 25px; height: 25px; }
+  .gachi-app .summary-card strong { font-size: 32px; margin-top: 2px; }
+  .gachi-app .summary-label { font-size: 12px; }
+  .gachi-app .empty-state { padding: 23px; min-height: 130px; }
+  .gachi-app .empty-calm { padding-right: 23px; }
+  .gachi-app .empty-figure { display: none; }
+  .gachi-app .read-section::after { display: none; }
+  .gachi-app .empty-icon { width: 42px; height: 42px; font-size: 21px; }
+  .gachi-app .empty-state h3 { font-size: 14px; }
+  .gachi-app .empty-state p { font-size: 11px; }
+  .gachi-app .chat-card { padding: 18px; }
+  .gachi-app .settings-page .gachi-hero { margin-bottom: 18px; }
+  .gachi-app .settings-page .gachi-hero h1 { font-size: 32px; }
+  .gachi-app .settings-total { padding: 5px 10px; font-size: 11px; }
+  .gachi-app .settings-total strong { font-size: 18px; }
+  .gachi-app .settings-chat { padding: 19px; }
+  .gachi-app .settings-chat-top { flex-direction: column; gap: 13px; }
+  .gachi-app .settings-platform { text-align: left; }
+  .gachi-app .settings-platform .platform-badge { margin-left: 0; }
+  .gachi-app .settings-fields { grid-template-columns: 1fr; gap: 16px; }
+  .gachi-app .settings-field:last-child { grid-column: auto; }
+  .gachi-app .settings-chat-bottom { align-items: stretch; flex-direction: column; }
+  .gachi-app .settings-chat .button { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gachi-app *, .gachi-app *::before, .gachi-app *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}

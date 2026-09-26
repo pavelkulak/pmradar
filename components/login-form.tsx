@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useGachiAudio } from "@/components/audio-provider";
 
 export function LoginForm() {
   const [email, setEmail] = useState("");
@@ -9,6 +10,7 @@ export function LoginForm() {
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const router = useRouter();
+  const audio = useGachiAudio();
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -21,6 +23,7 @@ export function LoginForm() {
         setError(result.error ?? "Не удалось войти");
         return;
       }
+      audio.resetAfterLogin();
       router.replace("/");
       router.refresh();
     } catch {

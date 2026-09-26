@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AppHeader } from "@/components/app-header";
+import { GachiHero } from "@/components/gachi-hero";
 
 type Chat = {
   id: string;
@@ -18,6 +19,12 @@ type Chat = {
   acknowledgedAt: string | null;
 };
 type ChatResponse = { chats: Chat[]; needsAttention: number; unreadMessages: number };
+
+function SummaryIcon({ kind }: { kind: "eye" | "message" | "group" }) {
+  return <span className={`summary-icon summary-icon-${kind}`} aria-hidden="true">
+    {kind === "eye" ? <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M2.3 12s3.5-5.7 9.7-5.7 9.7 5.7 9.7 5.7-3.5 5.7-9.7 5.7S2.3 12 2.3 12Z"/><circle cx="12" cy="12" r="2.8"/></svg> : kind === "message" ? <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M4 4.5h16v12H9l-5 3v-15Z"/><path d="M8 9h8M8 12.5h5"/></svg> : <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="9" cy="8" r="3"/><path d="M2.7 19v-1.5c0-2.2 2.7-4 6.3-4s6.3 1.8 6.3 4V19H2.7ZM16 5.3a2.8 2.8 0 0 1 0 5.4M17.1 13.8c2.6.3 4.2 1.7 4.2 3.7V19h-3.6"/></svg>}
+  </span>;
+}
 
 function readableDate(value: string | null): string {
   if (!value) return "Пока нет сообщений";
@@ -94,24 +101,23 @@ export function Dashboard() {
     }
   }
 
-  return <><AppHeader active="inbox" /><main className="page-container dashboard-page">
-    <section className="page-heading">
-      <div><p className="eyebrow">Рабочие чаты</p><h1>Входящие</h1><p className="muted">Все новые сообщения в одном месте.</p></div>
-      <div className="refresh-status"><span className="live-indicator" />Обновление каждые 15 секунд</div>
-    </section>
+  return <div className="gachi-app"><AppHeader active="inbox" /><main className="page-container dashboard-page">
+    <GachiHero eyebrow="Рабочие чаты" title="Входящие" description="Все новые сообщения в одном месте." aside={<div className="refresh-status"><span className="live-indicator" />Обновление каждые 15 секунд</div>}>
+      {(data?.unreadMessages ?? 0) > 0 && <div className="unread-mascot" role="status"><img src="/gachi/characters/unread-mascot.webp" width="1122" height="1402" alt="Братан, проверь входящие — есть новые сообщения" /></div>}
+    </GachiHero>
     <section className="summary-grid" aria-label="Сводка">
-      <div className="summary-card attention-summary"><span className="summary-label">Чатов требуют внимания</span><strong>{data?.needsAttention ?? "—"}</strong></div>
-      <div className="summary-card"><span className="summary-label">Новых сообщений</span><strong>{data?.unreadMessages ?? "—"}</strong></div>
-      <div className="summary-card"><span className="summary-label">Контролируемых чатов</span><strong>{data?.chats.length ?? "—"}</strong></div>
+      <div className="summary-card attention-summary"><span className="summary-photo summary-photo-attention" aria-hidden="true" /><SummaryIcon kind="eye" /><span className="summary-label">Чатов требуют внимания</span><strong>{data?.needsAttention ?? "—"}</strong></div>
+      <div className="summary-card"><span className="summary-photo summary-photo-back" aria-hidden="true" /><SummaryIcon kind="message" /><span className="summary-label">Новых сообщений</span><strong>{data?.unreadMessages ?? "—"}</strong></div>
+      <div className="summary-card"><span className="summary-photo summary-photo-back" aria-hidden="true" /><SummaryIcon kind="group" /><span className="summary-label">Контролируемых чатов</span><strong>{data?.chats.length ?? "—"}</strong></div>
     </section>
     {error && <div className="notice notice-error" role="alert">{error}<button onClick={() => void refresh()}>Обновить</button></div>}
     <section className="chat-section">
       <div className="section-heading"><div><div className="section-title"><span className="section-marker marker-attention" /><h2>Требуют внимания</h2><span className="count-pill count-alert">{unread.length}</span></div><p>Сначала показаны самые свежие сообщения</p></div></div>
-      {!data ? <div className="empty-state"><span className="skeleton-line" /><span className="skeleton-line short" /><span className="skeleton-button" /></div> : unread.length === 0 ? <div className="empty-state empty-calm"><span className="empty-icon">✓</span><div><h3>Новых сообщений нет</h3><p>Когда в подключённом чате появится сообщение, оно будет здесь.</p></div></div> : <div className="chat-list">{unread.map((chat) => <ChatCard key={chat.id} chat={chat} onAcknowledge={acknowledge} busy={busyId === chat.id} />)}</div>}
+      {!data ? <div className="empty-state"><span className="skeleton-line" /><span className="skeleton-line short" /><span className="skeleton-button" /></div> : unread.length === 0 ? <div className="empty-state empty-calm"><span className="empty-icon">✓</span><div><h3>Новых сообщений нет</h3><p>Когда в подключённом чате появится сообщение, оно будет здесь.</p></div><div className="empty-figure" aria-hidden="true" /></div> : <div className="chat-list">{unread.map((chat) => <ChatCard key={chat.id} chat={chat} onAcknowledge={acknowledge} busy={busyId === chat.id} />)}</div>}
     </section>
     <section className="chat-section read-section">
       <button className="collapse-heading" aria-expanded={!collapsed} onClick={() => setCollapsed((value) => !value)}><span className="section-title"><span className="section-marker marker-read" /><span className="heading-text"><b>Всё просмотрено</b><small>Нет новых сообщений</small></span><span className="count-pill">{read.length}</span></span><span className={`chevron ${collapsed ? "" : "open"}`} aria-hidden="true">⌄</span></button>
       {!collapsed && (read.length ? <div className="chat-list">{read.map((chat) => <ChatCard key={chat.id} chat={chat} onAcknowledge={acknowledge} busy={busyId === chat.id} />)}</div> : data && <p className="muted read-empty">Здесь появятся чаты после первого сообщения.</p>)}
     </section>
-  </main></>;
+  </main></div>;
 }
