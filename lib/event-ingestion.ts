@@ -7,18 +7,6 @@ export type { IncomingMessageEvent } from "@/lib/inbox-domain";
 
 export type IngestResult = "accepted" | "duplicate";
 
-export async function recordWebhookReceived(platform: Platform, receivedAt: Date): Promise<void> {
-  await db.$executeRaw`
-    INSERT INTO "IntegrationStatus" ("platform", "lastWebhookAt", "updatedAt")
-    VALUES (${platform}::"Platform", ${receivedAt}, ${receivedAt})
-    ON CONFLICT ("platform") DO UPDATE
-    SET "lastWebhookAt" = CASE
-          WHEN "IntegrationStatus"."lastWebhookAt" IS NULL OR "IntegrationStatus"."lastWebhookAt" < EXCLUDED."lastWebhookAt"
-          THEN EXCLUDED."lastWebhookAt" ELSE "IntegrationStatus"."lastWebhookAt" END,
-        "updatedAt" = GREATEST("IntegrationStatus"."updatedAt", EXCLUDED."updatedAt")
-  `;
-}
-
 export async function ingestMessage(event: IncomingMessageEvent): Promise<IngestResult> {
   return db.$transaction(async (tx) => {
     const duplicate = await tx.messageEvent.findUnique({

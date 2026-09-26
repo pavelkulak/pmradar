@@ -54,14 +54,3 @@ model AdminUser {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
-
-model IntegrationStatus {
-  platform        Platform @id
-  lastWebhookAt   DateTime?
-  lastCheckedAt   DateTime?
-  providerStatus  String?
-  pendingUpdates  Int?
-  lastError       String?
-  lastErrorAt     DateTime?
-  updatedAt       DateTime @updatedAt
-}

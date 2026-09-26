@@ -13,7 +13,6 @@
     "db:migrate:dev": "prisma migrate dev",
     "setup:telegram": "node --env-file-if-exists=.env scripts/setup-telegram.mjs",
     "setup:max": "node --env-file-if-exists=.env scripts/setup-max.mjs",
-    "check:max": "node --env-file-if-exists=.env scripts/check-max.mjs",
     "create-admin": "node --env-file-if-exists=.env scripts/create-admin.mjs"
   },
   "dependencies": {

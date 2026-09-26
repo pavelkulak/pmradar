@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-export function AppHeader({ active = "inbox" }: { active?: "inbox" | "chats" | "integrations" }) {
+export function AppHeader({ active = "inbox" }: { active?: "inbox" | "chats" }) {
   const router = useRouter();
   async function logout() {
     await fetch("/api/auth/logout", { method: "POST" });
@@ -15,7 +15,6 @@ export function AppHeader({ active = "inbox" }: { active?: "inbox" | "chats" | "
     <nav className="main-nav" aria-label="Главная навигация">
       <Link className={active === "inbox" ? "nav-link active" : "nav-link"} href="/">Входящие</Link>
       <Link className={active === "chats" ? "nav-link active" : "nav-link"} href="/settings/chats">Чаты</Link>
-      <Link className={active === "integrations" ? "nav-link active" : "nav-link"} href="/settings/integrations">Интеграции</Link>
     </nav>
     <button className="logout-button" onClick={logout}>Выйти <span aria-hidden="true">↗</span></button>
   </header>;

@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import JSONbig from "json-bigint";
-import { Platform } from "@prisma/client";
-import { ingestMessage, parseMaxMessage, recordWebhookReceived } from "@/lib/event-ingestion";
+import { ingestMessage, parseMaxMessage } from "@/lib/event-ingestion";
 import { safeError } from "@/lib/api";
 import { isWebhookSecretValid } from "@/lib/webhook-auth";
 
@@ -28,7 +27,6 @@ export async function POST(request: NextRequest) {
   }
   const event = parseMaxMessage(update, receivedAt);
   try {
-    await recordWebhookReceived(Platform.MAX, receivedAt);
     const result = event ? await ingestMessage(event) : "ignored";
     console.info(JSON.stringify({ platform: "MAX", chatExternalId: event?.externalChatId ?? null, eventId: event?.platformEventId ?? null, receivedAt: receivedAt.toISOString(), result, durationMs: Date.now() - startedAt }));
     return NextResponse.json({ ok: true });

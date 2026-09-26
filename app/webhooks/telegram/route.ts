@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import JSONbig from "json-bigint";
-import { Platform } from "@prisma/client";
-import { ingestMessage, parseTelegramMessage, recordWebhookReceived } from "@/lib/event-ingestion";
+import { ingestMessage, parseTelegramMessage } from "@/lib/event-ingestion";
 import { safeError } from "@/lib/api";
 import { isWebhookSecretValid } from "@/lib/webhook-auth";
 
@@ -28,7 +27,6 @@ export async function POST(request: NextRequest) {
   }
   const event = parseTelegramMessage(update, receivedAt);
   try {
-    await recordWebhookReceived(Platform.TELEGRAM, receivedAt);
     const result = event ? await ingestMessage(event) : "ignored";
     console.info(JSON.stringify({ platform: "TELEGRAM", chatExternalId: event?.externalChatId ?? null, eventId: event?.platformEventId ?? null, receivedAt: receivedAt.toISOString(), result, durationMs: Date.now() - startedAt }));
     return NextResponse.json({ ok: true });
